@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GameZone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="header">
+    <h1>🎮 GameZone</h1>
+    <input type="text" id="searchInput" placeholder="Search games..." />
+    <button id="toggleTheme">🌗</button>
+    <button id="toggleAdmin">Admin Panel</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
+  </header>
+
+  <nav class="categories" id="categoryNav">
+    <button class="category-btn" data-category="All">All Games</button>
+    <button class="category-btn" data-category="Action">Action</button>
+    <button class="category-btn" data-category="Simulator">Simulator</button>
+    <button class="category-btn" data-category="Racing">Racing</button>
+    <button class="category-btn" data-category="Puzzle">Puzzle</button>
+  </nav>
+
+  <!-- Admin Panel -->
+  <section class="admin-panel" id="adminPanel" style="display: none;">
+    <h2>Add New Game</h2>
+    <form id="adminForm">
+      <input type="text" id="titleInput" placeholder="Title" required />
+      <input type="text" id="descInput" placeholder="Description" required />
+      <input type="text" id="categoryInput" placeholder="Category" list="categoryList" required />
+      <datalist id="categoryList">
+         <option value="Action">
+         <option value="Racing">
+         <option value="Puzzle">
+         <option value="Simulator">
+      </datalist>
+      <input type="text" id="sizeInput" placeholder="Size (e.g., 100MB)" required />
+      <input type="text" id="versionInput" placeholder="Version" required />
+      <input type="url" id="imgInput" placeholder="Image URL" required />
+      <input type="url" id="downloadInput" placeholder="Download URL" required />
+      <button type="submit">Add Game</button>
+    </form>
+  </section>
+
+  <main id="gameContainer" class="game-grid"></main>
+
+  <template id="gameCardTemplate">
+    <div class="game-card">
+      <img class="game-img" />
+      <h2 class="game-title"></h2>
+      <p class="game-desc"></p>
+      <p class="game-cat"></p>
+      <span class="game-meta"></span>
+      <a class="download-btn" target="_blank">Download</a>
+    </div>
+  </template>
+
+  <footer class="footer">
+    <p>© 2025 GameZone. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

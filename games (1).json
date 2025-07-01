@@ -1,0 +1,21 @@
+[
+  {
+    "title": "Car Drift X",
+    "desc": "Ultimate drifting and racing game with custom cars.",
+    "category": "Racing",
+    "size": "150MB",
+    "version": "1.2.1",
+    "img": "https://via.placeholder.com/150",
+    "download": "https://example.com/car-drift-x.apk"
+  },
+  {
+    "title": "Block Puzzle 2048",
+    "desc": "Slide and merge blocks to reach 2048.",
+    "category": "Puzzle",
+    "size": "60MB",
+    "version": "1.0",
+    "img": "https://via.placeholder.com/150",
+    "download": "https://example.com/block-puzzle.apk"
+  }
+
+]

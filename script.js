@@ -5,6 +5,9 @@ const gameContainer = document.getElementById("gameContainer");
 const template = document.getElementById("gameCardTemplate");
 const searchInput = document.getElementById("searchInput");
 const toggleTheme = document.getElementById("toggleTheme");
+
+
+// Admin panel elements
 const toggleAdmin = document.getElementById("toggleAdmin");
 const logoutBtn = document.getElementById("logoutBtn");
 const adminPanel = document.getElementById("adminPanel");
@@ -13,6 +16,8 @@ const categoryButtons = document.querySelectorAll(".category-btn");
 
 let isLoggedIn = false;
 let currentCategory = "All";
+
+
 
 // ✅ Load from games.json and merge with localStorage
 fetch('games.json')
@@ -27,6 +32,8 @@ fetch('games.json')
     games = JSON.parse(localStorage.getItem("games")) || [];
     displayGames();
   });
+
+  
 
 function displayGames(filter = "") {
   gameContainer.innerHTML = "";

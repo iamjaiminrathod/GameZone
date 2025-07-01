@@ -11,7 +11,7 @@
   <header class="header">
     <h1>🎮 GameZone</h1>
     <input type="text" id="searchInput" placeholder="Search games..." />
-    <button id="toggleTheme">🌗</button>
+    <button id="toggleTheme"></button>
     <button id="toggleAdmin">Admin Panel</button>
     <button id="logoutBtn" style="display:none;">Logout</button>
   </header>
@@ -19,13 +19,17 @@
   <nav class="categories" id="categoryNav">
     <button class="category-btn" data-category="All">All Games</button>
     <button class="category-btn" data-category="Action">Action</button>
-    <button class="category-btn" data-category="Simulator">Simulator</button>
     <button class="category-btn" data-category="Racing">Racing</button>
     <button class="category-btn" data-category="Puzzle">Puzzle</button>
   </nav>
 
   <!-- Admin Panel -->
   <section class="admin-panel" id="adminPanel" style="display: none;">
+    <hr />
+  <div class="admin-actions">
+    <button id="exportBtn">💾 Save All to JSON</button>
+    <input type="file" id="importJson" accept=".json" multiple />
+  </div>
     <h2>Add New Game</h2>
     <form id="adminForm">
       <input type="text" id="titleInput" placeholder="Title" required />
@@ -35,7 +39,6 @@
          <option value="Action">
          <option value="Racing">
          <option value="Puzzle">
-         <option value="Simulator">
       </datalist>
       <input type="text" id="sizeInput" placeholder="Size (e.g., 100MB)" required />
       <input type="text" id="versionInput" placeholder="Version" required />

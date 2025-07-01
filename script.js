@@ -1,5 +1,4 @@
-
-let games = JSON.parse(localStorage.getItem("games")) || [];
+let games = [];
 const adminPassword = "admin123";
 
 const gameContainer = document.getElementById("gameContainer");
@@ -15,17 +14,29 @@ const categoryButtons = document.querySelectorAll(".category-btn");
 let isLoggedIn = false;
 let currentCategory = "All";
 
+// ✅ Load from games.json and merge with localStorage
+fetch('games.json')
+  .then(res => res.json())
+  .then(jsonData => {
+    const stored = JSON.parse(localStorage.getItem("games")) || [];
+    games = [...jsonData, ...stored];
+    localStorage.setItem("games", JSON.stringify(games));
+    displayGames();
+  })
+  .catch(() => {
+    games = JSON.parse(localStorage.getItem("games")) || [];
+    displayGames();
+  });
+
 function displayGames(filter = "") {
   gameContainer.innerHTML = "";
   const filtered = games.filter(game => {
     const matchesCategory =
       currentCategory.toLowerCase() === "all" ||
       game.category.toLowerCase() === currentCategory.toLowerCase();
-
     const matchesSearch = game.title.toLowerCase().includes(filter.toLowerCase());
     return matchesCategory && matchesSearch;
   });
-
 
   filtered.forEach((game, index) => {
     const card = template.content.cloneNode(true);
@@ -77,6 +88,7 @@ toggleAdmin.addEventListener("click", () => {
     isLoggedIn = true;
     adminPanel.style.display = "block";
     logoutBtn.style.display = "inline-block";
+    attachAdminActions();
     displayGames();
   } else {
     alert("Access denied.");
@@ -105,4 +117,53 @@ categoryButtons.forEach(btn => {
   });
 });
 
-displayGames();
+function attachAdminActions() {
+  const exportBtn = document.getElementById("exportBtn");
+  if (exportBtn) {
+    exportBtn.addEventListener("click", () => {
+      if (confirm("Do you want to export all games as a JSON file?")) {
+        const dataStr = JSON.stringify(games, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "games.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    });
+  }
+
+  const importJson = document.getElementById("importJson");
+  if (importJson) {
+    importJson.addEventListener("change", (event) => {
+      const files = Array.from(event.target.files);
+      if (!files.length) return;
+
+      let imported = 0;
+
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          try {
+            const newGames = JSON.parse(e.target.result);
+            if (Array.isArray(newGames)) {
+              games = games.concat(newGames);
+              imported++;
+              if (imported === files.length) {
+                localStorage.setItem("games", JSON.stringify(games));
+                displayGames();
+                alert("All games imported successfully.");
+              }
+            } else {
+              alert("Invalid format in " + file.name);
+            }
+          } catch {
+            alert("Failed to parse: " + file.name);
+          }
+        };
+        reader.readAsText(file);
+      });
+    });
+  }
+}
